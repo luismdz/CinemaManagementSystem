@@ -3,6 +3,25 @@
   margin: 0 auto;
 }
 
+.titulo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 1.2rem 0;
+}
+
+.titulo h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.titulo mat-chip {
+  font-size: 12px;
+  margin-left: .75rem;
+  margin-top: 2px;
+  cursor: initial;
+  user-select: none;
+}
 
 mat-chip {
   cursor: pointer;

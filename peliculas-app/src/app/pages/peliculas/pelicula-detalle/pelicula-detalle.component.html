@@ -1,9 +1,15 @@
 <div class="pelicula-container"
   *ngIf="pelicula">
 
-  <h2 class="titulo">
-    {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento.getFullYear() }})
-  </h2>
+  <div class="titulo">
+    <h2>
+      {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento.getFullYear() }})
+    </h2>
+    <mat-chip selected
+      color="accent">
+      {{ pelicula.enCines ? 'En cines' : 'Proximamente' }}
+    </mat-chip>
+  </div>
 
   <mat-chip-list>
     <mat-chip *ngFor="let genero of pelicula.generos"
@@ -76,7 +82,8 @@
         allowfullscreen></iframe>
     </div>
 
-    <div class="map-container">
+    <div class="map-container"
+      *ngIf="pelicula.cines.length > 0">
       <h3>Mostrándose en los siguientes Cines</h3>
       <app-mapa [coordenadas]="cinesCoordenadas"
         [soloLectura]="true"></app-mapa>

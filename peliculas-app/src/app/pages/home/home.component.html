@@ -1,0 +1,10 @@
+<div class="animate__animated animate__fadeIn animate__faster"
+  *ngIf="peliculasEnCines || peliculasFuturas">
+  <h2>En Cines</h2>
+  <app-listado-peliculas [peliculas]="peliculasEnCines"></app-listado-peliculas>
+
+  <h2>Futuros Estrenos</h2>
+  <app-listado-peliculas [peliculas]="peliculasFuturas"></app-listado-peliculas>
+</div>
+
+<mat-spinner *ngIf="!(peliculasEnCines || peliculasFuturas)"></mat-spinner>

@@ -1,0 +1,26 @@
+<mat-form-field appearance="fill"
+  *ngIf="data">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select [formControl]="selector"
+    multiple
+    (selectionChange)="onSelectedItems($event)">
+    <mat-option *ngIf="data?.length > 0"
+      value=0>
+      {{ firstSelectionOption }}
+    </mat-option>
+    <mat-option *ngFor="let item of data"
+      [value]="item?.id">{{ item?.nombre }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field appearance="fill"
+  *ngIf="!data">
+  <mat-label>{{ label }}</mat-label>
+  <mat-select>
+    <mat-option *ngIf="!data"
+      disabled>
+      No hay datos
+    </mat-option>
+  </mat-select>
+</mat-form-field>

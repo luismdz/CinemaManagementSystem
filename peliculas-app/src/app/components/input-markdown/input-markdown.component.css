@@ -1,0 +1,22 @@
+mat-tab-group {
+  margin-bottom: 1.5rem;
+}
+
+.tab-icon {
+  margin-right: .25rem;
+}
+
+mat-form-field {
+  width: 100%;
+  padding-bottom: 0;
+}
+
+mat-form-field textarea {
+  height: 300px;
+  /* text-align: justify; */
+}
+
+markdown {
+  /* text-align: justify; */
+  max-width: 100%;
+}

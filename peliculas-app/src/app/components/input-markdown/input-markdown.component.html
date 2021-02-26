@@ -1,0 +1,25 @@
+<mat-tab-group>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">code</mat-icon>
+      Editar
+    </ng-template>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ placeholder }}</mat-label>
+      <textarea matInput
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        [(ngModel)]="contenidoMarkdown"
+        (input)="inputTextArea()"></textarea>
+    </mat-form-field>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">preview</mat-icon>
+      Preview
+    </ng-template>
+    <markdown [data]="contenidoMarkdown"
+      ngPreserveWhitespaces></markdown>
+  </mat-tab>
+</mat-tab-group>

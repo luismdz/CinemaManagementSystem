@@ -1,0 +1,89 @@
+<div class="pelicula-container"
+  *ngIf="pelicula">
+
+  <h2 class="titulo">
+    {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento.getFullYear() }})
+  </h2>
+
+  <mat-chip-list>
+    <mat-chip *ngFor="let genero of pelicula.generos"
+      [routerLink]="['/peliculas','buscar']"
+      [queryParams]="{generoId: genero.id}">
+      {{ genero.nombre }}
+    </mat-chip>
+  </mat-chip-list>
+
+  <div class="top-content">
+
+    <div class="img-container">
+      <img [src]="pelicula.poster | image"
+        [alt]="pelicula.titulo">
+    </div>
+
+    <div class="text-content">
+
+      <div class="resumen">
+        <h3>Resumen</h3>
+        <markdown [data]="pelicula?.resumen"
+          ngPreserveWhitespaces></markdown>
+      </div>
+
+      <div class="fecha">
+        <small><strong>Fecha de Estreno: </strong></small>
+        <small>{{ pelicula.fechaLanzamiento | date }}</small>
+      </div>
+
+      <div class="rating">
+        <small><strong>Promedio: </strong>0.0/5</small>
+        <small><strong>Tu voto: </strong>*****</small>
+      </div>
+
+      <div class="cast"
+        *ngIf="pelicula.actores?.length > 0">
+        <h3>Actores</h3>
+        <div class="cast-content">
+
+          <div class="cast-inner-content"
+            *ngFor="let actor of pelicula.actores">
+
+            <img [src]="actor.foto"
+              [alt]="actor.nombreCompleto"
+              class="actor-foto">
+
+            <div class="actor-info">
+              <small>{{ actor.personaje }}</small>
+              <small><strong>{{ actor.nombreCompleto }}</strong></small>
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="bottom-content">
+
+    <div class="trailer-container"
+      *ngIf="pelicula.trailer">
+      <h3>Trailer</h3>
+      <iframe width="600"
+        height="360"
+        [src]="trailerURL"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="map-container">
+      <h3>Mostrándose en los siguientes Cines</h3>
+      <app-mapa [coordenadas]="cinesCoordenadas"
+        [soloLectura]="true"></app-mapa>
+    </div>
+
+  </div>
+
+</div>
+
+<mat-spinner *ngIf="!pelicula"></mat-spinner>

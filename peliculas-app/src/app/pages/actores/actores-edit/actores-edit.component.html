@@ -1,0 +1,76 @@
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-spin-clockwise"
+  [fullScreen]="true">
+  <p style="color: white"> Cargando... </p>
+</ngx-spinner>
+
+<form class="shadow-sm"
+  [formGroup]="form"
+  (ngSubmit)="guardarCambios()">
+
+  <h2>{{ editMode ? 'Editar' : 'Crear' }} Actor</h2>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input type="text"
+      placeholder="Ex. Joe"
+      matInput
+      required
+      formControlName="nombre"
+      (input)="setFirstLetterToUpper()">
+    <mat-error *ngIf="nombre.invalid">
+      {{ mostrarErroresNombre() }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Apellido</mat-label>
+    <input type="text"
+      placeholder="Ex. Doe"
+      matInput
+      required
+      formControlName="apellido"
+      (input)="setFirstLetterToUpper()">
+    <mat-error *ngIf="apellido.invalid">
+      {{ mostrarErroresApellido() }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill"
+    class="date">
+    <mat-label>Fecha de Nacimiento</mat-label>
+    <input matInput
+      [matDatepicker]="picker"
+      formControlName="fechaNacimiento"
+      autocomplete="off">
+    <mat-datepicker-toggle matSuffix
+      [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker
+      color="primary"></mat-datepicker>
+  </mat-form-field>
+
+  <app-input-img [imagenActual]="actor?.foto"
+    (imagenSeleccionada)="recibirImagen($event)"></app-input-img>
+
+  <app-input-markdown placeholder="Biografía"
+    [contenidoMarkdown]="actor?.biografia"
+    (changeContent)="cambioBio($event)"></app-input-markdown>
+
+  <div class="act-btn">
+    <button mat-raised-button
+      color="primary"
+      [disabled]="form.invalid">
+      Guardar Cambios
+    </button>
+
+    <button mat-raised-button
+      color="warn"
+      type="button"
+      routerLink="/actores">
+      Cancelar
+    </button>
+  </div>
+
+</form>

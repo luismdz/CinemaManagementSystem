@@ -1,0 +1,28 @@
+<div class="upload-container">
+  <button mat-stroked-button
+    color="default"
+    type="button"
+    (click)="fileInput.click()">
+    <mat-icon>file_upload</mat-icon>
+    Seleccionar imagen
+  </button>
+
+  <input type="file"
+    hidden
+    #fileInput
+    (change)="change($event)">
+
+  <div class="img-container">
+    <div class="img"
+      *ngIf="image64">
+      <img [src]="image64"
+        alt="foto_actor">
+    </div>
+
+    <div class="img"
+      *ngIf="imagenActual && !image64">
+      <img [src]="imagenActual"
+        alt="foto_actor">
+    </div>
+  </div>
+</div>

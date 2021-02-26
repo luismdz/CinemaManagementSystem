@@ -1,0 +1,38 @@
+form {
+  width: min(600px, 100%);
+  padding: 1.5rem;
+}
+
+.form-container {
+  margin: 2rem 0;
+}
+
+form h2 {
+  margin: 0;
+  margin-bottom: 1.2rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: .75rem;
+}
+
+.chx {
+  margin-bottom: 1.5rem;
+}
+
+.poster h4 {
+  margin-top: 0;
+}
+
+.act-btn {
+  margin-top: -1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.act-btn button {
+  display: block;
+  width: min(100%, 300px);
+  margin-bottom: .75rem;
+}

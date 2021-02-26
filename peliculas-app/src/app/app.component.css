@@ -1,0 +1,40 @@
+.wrapper {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-toolbar {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100% !important;
+  z-index: 1000;
+  height: auto;
+  min-height: 64px;
+}
+
+app-buscador {
+  flex: 1;
+  justify-self: flex-end;
+}
+
+.no-scr {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.container {
+  margin: 2rem auto;
+  width: min(1200px, 90%);
+  height: auto;
+}
+
+@media screen and (max-width:1024px) {
+  app-buscador {
+    display: none;
+  }
+}

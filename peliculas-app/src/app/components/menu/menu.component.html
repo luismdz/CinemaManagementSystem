@@ -1,0 +1,57 @@
+<nav>
+  <span class="logo">
+    <a mat-button
+      routerLink=''>
+      <mat-icon>local_movies</mat-icon>
+      <span class="title">
+        Angular Peliculas
+      </span>
+    </a>
+  </span>
+
+  <div class="nav"
+    [ngClass]="{'nav-column': mode === 'column'}">
+
+    <a mat-button
+      routerLink="/"
+      routerLinkActive="active"
+      class="nav-item"
+      *ngIf="mode === 'column'">
+      <mat-icon>home</mat-icon>
+      Inicio
+    </a>
+    <a mat-button
+      routerLink="/peliculas/buscar"
+      routerLinkActive="active"
+      class="nav-item">
+      <mat-icon>search</mat-icon>
+      Buscar Peliculas
+    </a>
+    <a mat-button
+      routerLink="/peliculas/edit"
+      routerLinkActive="active"
+      class="nav-item">
+      <mat-icon>add</mat-icon>
+      Crear Pelicula
+    </a>
+    <a mat-button
+      routerLink="/generos"
+      routerLinkActive="active"
+      class="nav-item">
+      Géneros
+    </a>
+    <a mat-button
+      routerLink="/actores"
+      routerLinkActive="active"
+      class="nav-item">
+      Actores
+    </a>
+    <a mat-button
+      routerLink="/cines"
+      routerLinkActive="active"
+      class="nav-item">
+      Cines
+    </a>
+  </div>
+
+</nav>

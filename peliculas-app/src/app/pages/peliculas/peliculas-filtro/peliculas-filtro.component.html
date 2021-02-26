@@ -1,0 +1,67 @@
+<div class="animate__animated animate__fadeIn animate__faster">
+  <h2>Buscar Peliculas</h2>
+
+  <form [formGroup]="filterForm"
+    class="shadow-sm">
+
+    <div class="col-2">
+      <mat-form-field>
+        <mat-label>Titulo</mat-label>
+        <input type="text"
+          matInput
+          formControlName="titulo">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Género</mat-label>
+        <mat-select formControlName="generoId">
+          <mat-option value="0"
+            selected>-- Seleccione un genero --
+          </mat-option>
+          <mat-option *ngFor="let genero of generos; let i = index"
+            [value]="genero.id">
+            {{ genero.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="chx">
+      <mat-checkbox color="primary"
+        formControlName="enCines">
+        En Cines
+      </mat-checkbox>
+      <mat-checkbox color="primary"
+        formControlName="proximosEstrenos">
+        Próximos Estrenos
+      </mat-checkbox>
+    </div>
+
+    <div class="act">
+      <button mat-raised-button
+        color="warn"
+        type="button"
+        (click)="limpiarFiltros()">
+        Limpiar
+      </button>
+    </div>
+  </form>
+
+  <app-listado-peliculas [peliculas]="peliculas"
+    *ngIf="peliculas"></app-listado-peliculas>
+
+  <mat-spinner *ngIf="!peliculas && !hasError"></mat-spinner>
+
+  <div class="no-data-container mat-elevation-z3"
+    *ngIf="hasError">
+    <mat-icon>error_outline</mat-icon>
+    <p>No hay Datos</p>
+  </div>
+
+  <mat-paginator class="paginator"
+    showFirstLastButtons
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10,20, 50]"
+    (page)="actualizarPagina($event)"></mat-paginator>
+</div>

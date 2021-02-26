@@ -1,0 +1,82 @@
+<div class="animate__animated animate__fadeIn animate__faster">
+
+  <h2>Géneros</h2>
+
+  <button mat-raised-button
+    color="primary"
+    [routerLink]="['/generos','edit']">
+    Crear nuevo
+  </button>
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <table mat-table
+    matSort
+    #table
+    [dataSource]="generos"
+    class="mat-elevation-z6"
+    *ngIf="!isLoading && generos">
+
+    <ng-container matColumnDef="number">
+      <th mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header>#
+      </th>
+      <td mat-cell
+        *matCellDef="let i = index"> {{ currentPage > 1 ? (pageSize * (currentPage - 1)) + (i + 1) : i + 1 }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header>Nombre
+      </th>
+      <td mat-cell
+        *matCellDef="let genero"> {{genero.nombre}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell
+        *matHeaderCellDef>Acciones
+      </th>
+      <td mat-cell
+        *matCellDef="let genero">
+        <a mat-icon-button
+          color="primary"
+          [routerLink]="['edit', genero.id]">
+          <!-- Editar -->
+          <mat-icon>edit</mat-icon>
+        </a>
+
+        <button mat-icon-button
+          color="warn"
+          (click)="eliminarGenero(genero.id)">
+          <!-- Borrar -->
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row
+      *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row
+      *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"
+    showFirstLastButtons
+    [length]="totalRecords"
+    [pageSize]="pageSize"
+    (page)="actualizarPagina($event)"
+    class="paginator mat-elevation-z6"></mat-paginator>
+
+  <div class="no-data-container mat-elevation-z3"
+    *ngIf="!isLoading && !generos">
+    <mat-icon>error_outline</mat-icon>
+    <p>No hay Datos</p>
+  </div>
+
+</div>

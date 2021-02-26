@@ -1,0 +1,40 @@
+<div class="listado"
+  *ngIf="peliculas.length > 0 else nodata">
+
+  <mat-card role="group"
+    *ngFor="let pelicula of peliculas"
+    class="card">
+
+    <img mat-card-image
+      [src]="pelicula.poster | image"
+      [alt]="pelicula.titulo"
+      [routerLink]="['/peliculas', pelicula.id]">
+
+    <div class="content">
+      <mat-card-content>
+        <p class="titulo">
+          {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento | date:'y' }})
+        </p>
+      </mat-card-content>
+
+      <mat-card-actions class="act-buttons">
+        <button mat-raised-button
+          color="primary"
+          [routerLink]="['/peliculas', 'edit', pelicula.id]">
+          Editar
+        </button>
+
+        <button mat-raised-button
+          color="warn"
+          (click)="eliminarPelicula(pelicula.id)">
+          Borrar
+        </button>
+      </mat-card-actions>
+    </div>
+
+  </mat-card>
+</div>
+
+<ng-template #nodata>
+  <p>No existen peliculas para mostrar.</p>
+</ng-template>

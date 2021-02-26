@@ -1,0 +1,89 @@
+<div class="animate__animated animate__fadeIn animate__faster">
+  <form class="shadow-sm"
+    [formGroup]="form"
+    (ngSubmit)="guardarCambios()">
+
+    <h2>{{ editMode ? 'Editar' : 'Crear' }} Película</h2>
+
+    <div class="form-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Titulo</mat-label>
+        <input type="text"
+          placeholder="Titulo de la Pelicula"
+          matInput
+          formControlName="titulo"
+          (input)="setFirstLetterToUpper()">
+        <mat-error *ngIf="titulo.invalid">
+          {{ mostrarErrorTitulo() }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="chx">
+        <mat-checkbox color="primary"
+          formControlName="enCines">
+          En cines
+        </mat-checkbox>
+      </div>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Trailer</mat-label>
+        <input type="text"
+          placeholder="Link del trailer"
+          matInput
+          formControlName="trailer">
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha de Lanzamiento</mat-label>
+        <input matInput
+          formControlName="fechaLanzamiento"
+          [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix
+          [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <div class="poster">
+        <h4>Seleccionar Poster</h4>
+        <app-input-img [imagenActual]="pelicula?.poster"
+          (imagenSeleccionada)="recibirImagen($event)"></app-input-img>
+      </div>
+
+      <app-input-markdown placeholder="Resumen"
+        [contenidoMarkdown]="pelicula?.resumen"
+        (changeContent)="recibirResumen($event)"></app-input-markdown>
+
+
+      <app-selector-multiple [label]="'Generos'"
+        [list]="generosSelector"
+        [datosIniciales]="generosPeliculaEditar"
+        (selectItems)="recibirGenerosSeleccionados($event)">
+      </app-selector-multiple>
+
+      <app-selector-multiple [label]="'Cines'"
+        [list]="cinesSelector"
+        [datosIniciales]="cinesPeliculaEditar"
+        (selectItems)="recibirCinesSeleccionados($event)">
+      </app-selector-multiple>
+
+      <app-autocomplete-actores [actoresIniciales]="actoresPeliculaEditar"
+        (selectedActors)="recibirActores($event)"></app-autocomplete-actores>
+    </div>
+
+    <div class="act-btn">
+      <button mat-raised-button
+        color="primary"
+        [disabled]="form.invalid">
+        Guardar Cambios
+      </button>
+
+      <button mat-raised-button
+        color="warn"
+        type="button"
+        routerLink="/">
+        Cancelar
+      </button>
+    </div>
+
+  </form>
+</div>

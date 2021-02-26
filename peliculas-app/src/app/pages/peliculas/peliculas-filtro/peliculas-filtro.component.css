@@ -1,0 +1,41 @@
+form {
+  width: 100%;
+  max-width: 500px;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.col-2 {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.chx>* {
+  display: block;
+  margin-bottom: .5rem;
+}
+
+.chx {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.paginator {
+  width: 100%;
+}
+
+@media screen and (max-width: 450px) {
+
+  .col-2 {
+    display: flex;
+    flex-direction: column;
+  }
+
+}

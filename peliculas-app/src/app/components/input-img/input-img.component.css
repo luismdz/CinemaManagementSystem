@@ -1,0 +1,17 @@
+.upload-container {
+  margin-bottom: 1.5rem;
+}
+
+.img-container {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.img {
+  width: 100%;
+  max-width: 300px;
+}
+
+.img img {
+  width: 100%;
+}

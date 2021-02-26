@@ -1,0 +1,37 @@
+<form class="shadow-sm"
+  [formGroup]="form"
+  (ngSubmit)="guardarCambios()">
+
+  <h2>{{ editMode ? 'Editar' : 'Crear' }} Cine</h2>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nombre</mat-label>
+    <input type="text"
+      placeholder="Ex. Agora Mall"
+      matInput
+      formControlName="nombre"
+      (input)="setFirstLetterToUpper()">
+    <mat-error *ngIf="nombre.invalid">
+      {{ mostrarErrores() }}
+    </mat-error>
+  </mat-form-field>
+
+  <app-mapa [coordenadas]="coordenadasIniciales"
+    (coordenadaSeleccionada)="recibirCoordenadas($event)"></app-mapa>
+
+  <div class="act-btn">
+    <button mat-raised-button
+      color="primary"
+      [disabled]="form.invalid">
+      Guardar Cambios
+    </button>
+
+    <button mat-raised-button
+      color="warn"
+      type="button"
+      routerLink="/cines">
+      Cancelar
+    </button>
+  </div>
+
+</form>

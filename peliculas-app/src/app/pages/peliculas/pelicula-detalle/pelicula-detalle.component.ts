@@ -27,8 +27,6 @@ export class PeliculaDetalleComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.peliculaSvc.obtenerPeliculaPorId(params['id']).subscribe(
         (pelicula: PeliculaDTO) => {
-          console.log(pelicula);
-
           this.pelicula = pelicula;
 
           if (this.pelicula.trailer?.length > 0) {
@@ -50,7 +48,5 @@ export class PeliculaDetalleComponent implements OnInit {
         }
       );
     });
-
-    // this.peliculaSvc.obtenerTodos().subscribe();
   }
 }

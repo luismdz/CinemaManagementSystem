@@ -1,4 +1,4 @@
 export interface GeneroDTO {
-    id?: number | string;
-    nombre: string;
+  id?: number;
+  nombre: string;
 }

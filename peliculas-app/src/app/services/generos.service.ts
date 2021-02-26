@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { map, tap } from 'rxjs/operators';
 import { GeneroDTO } from '../models/generos.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GenerosService {
-
   private apiUrl = environment.apiURL + '/generos';
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
   obtenerTodos(): Observable<GeneroDTO[]> {
     return this.http.get<GeneroDTO[]>(`${this.apiUrl}/list`);
   }
 
-  obtenerTodosPorPagina(pageNumber: number = 1, pageSize: number = 50): Observable<GeneroDTO[]> {
+  obtenerTodosPorPagina(
+    pageNumber: number = 1,
+    pageSize: number = 50
+  ): Observable<GeneroDTO[]> {
+    pageNumber = pageNumber < 1 ? 1 : pageNumber;
+    pageSize = pageSize < 5 ? 5 : pageSize;
 
-    pageNumber = (pageNumber < 1) ? 1: pageNumber;
-    pageSize = (pageSize < 5) ? 5: pageSize;
-    
-    return this.http.get<GeneroDTO[]>(`${this.apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return this.http.get<GeneroDTO[]>(
+      `${this.apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
   }
 
   obtenerGeneroPorId(id: number) {
@@ -44,5 +44,4 @@ export class GenerosService {
   eliminarGenero(id: number) {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
-
 }

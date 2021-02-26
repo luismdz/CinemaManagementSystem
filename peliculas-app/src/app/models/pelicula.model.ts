@@ -1,6 +1,7 @@
 import { GeneroDTO } from './generos.model';
 import { CineDTO } from './cine.model';
 import { ActorDTO } from './actor.model';
+
 export interface PeliculaCreacionDTO {
   titulo: string;
   resumen?: string;

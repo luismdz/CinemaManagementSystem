@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-
 import { PeliculaCreacionDTO, PeliculaDTO } from '../models/pelicula.model';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 import { map } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -11,7 +9,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PeliculasService {
-  private peliculas: PeliculaDTO[] = [];
   private apiUrl = environment.apiURL + '/peliculas';
   dataActualizada: BehaviorSubject<boolean> = new BehaviorSubject(false);
 

@@ -52,7 +52,6 @@ export class ActoresComponent implements OnInit {
   actualizarPagina(page: PageEvent) {
     this.currentPage = page.pageIndex + 1;
     this.pageSize = page.pageSize;
-    // console.log(page);
     this.cargarDatos(this.currentPage, page.pageSize);
   }
 }

@@ -74,7 +74,7 @@ table .cta-span mat-icon {
   margin-right: 10px;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(63, 23, 23, 0.3);
   border-radius: 10px;
   background-color: #F5F5F5;
@@ -83,4 +83,4 @@ table .cta-span mat-icon {
 ::-webkit-scrollbar-thumb {
   background-color: rgb(100, 100, 100);
   border-radius: 25px;
-}
+} */

@@ -122,7 +122,6 @@ export class PeliculasEditComponent implements OnInit {
               cinesIds: this.pelicula.cines.map((x) => x.id),
               actores: this.pelicula.actores,
             };
-            console.log(dataToForm);
 
             this.form.patchValue(dataToForm);
             const { cinesIds, generosIds, actores } = this.form.value;
@@ -192,7 +191,6 @@ export class PeliculasEditComponent implements OnInit {
 
     if (this.editMode) {
       // ...update
-      console.log(nuevaPelicula);
       this.peliculaSvc
         .actualizarPelicula(this.currentId, nuevaPelicula)
         .subscribe(

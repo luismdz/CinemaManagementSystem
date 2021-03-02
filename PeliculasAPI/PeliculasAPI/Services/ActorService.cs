@@ -45,10 +45,26 @@ namespace PeliculasAPI.Services
 
         public async Task<List<ActorDto>> GetByName(string name)
         {
-            if(string.IsNullOrWhiteSpace(name)) { return new List<ActorDto>(); }
-
+            //if(string.IsNullOrWhiteSpace(name)) { return new List<ActorDto>(); }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return await _dbContext.Actores
+                    .Select(a => new ActorDto()
+                    {
+                        Id = a.Id,
+                        Nombre = a.Nombre,
+                        Apellido = a.Apellido,
+                        Biografia = a.Biografia,
+                        FechaNacimiento = a.FechaNacimiento,
+                        Foto = a.Foto
+                    })
+                    .OrderBy(x => x.Nombre + ' ' + x.Apellido)
+                    .Take(10)
+                    .ToListAsync();
+            }
+            
             return await _dbContext.Actores
-                .Where(a => a.Nombre.Contains(name) || a.Apellido.Contains(name))
+                .Where(a => (a.Nombre.Contains(name) || a.Apellido.Contains(name)))
                 .Select(a => new ActorDto()
                 {
                      Id = a.Id,

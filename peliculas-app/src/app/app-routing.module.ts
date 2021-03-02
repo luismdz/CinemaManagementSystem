@@ -26,6 +26,7 @@ const routes: Routes = [
   { path: 'peliculas/edit/:id', component: PeliculasEditComponent },
   { path: 'peliculas/buscar', component: PeliculasFiltroComponent },
   { path: 'peliculas/:id', component: PeliculaDetalleComponent },
+  { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

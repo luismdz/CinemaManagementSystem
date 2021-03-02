@@ -8,7 +8,6 @@ C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\D
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\ref\PeliculasAPI.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\PeliculasAPI.pdb
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
@@ -161,3 +160,8 @@ C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\D
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\AutoMapper.dll
 C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\luise\Desktop\Projects\AngularPeliculas\PeliculasAPI\PeliculasAPI\bin\Debug\net5.0\Microsoft.Extensions.Identity.Stores.dll

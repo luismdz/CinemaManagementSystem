@@ -96,7 +96,7 @@ namespace PeliculasAPI.Services
 
         public async Task<(List<PeliculaDto>, int)> GetFiltered(PeliculaFiltroDto filtroDto)
         {
-            var peliculasQueryable = this._dbContext.Peliculas.AsQueryable();
+            var peliculasQueryable = _dbContext.Peliculas.AsQueryable();
             int totalRecords = await peliculasQueryable.CountAsync();
             int totalRecordsFiltered = 0;
             
@@ -118,7 +118,8 @@ namespace PeliculasAPI.Services
             if(filtroDto.ProximosEstrenos)
             {
                 peliculasQueryable = peliculasQueryable
-                    .Where(x => x.FechaLanzamiento > DateTime.Now || !x.EnCines);
+                    .Where(x => x.FechaLanzamiento > DateTime.Now);
+
                 totalRecordsFiltered += await peliculasQueryable.CountAsync();
             }
 
@@ -127,6 +128,7 @@ namespace PeliculasAPI.Services
                 peliculasQueryable = peliculasQueryable
                     .Where(x => x.PeliculasGeneros.Select(y => y.GeneroId)
                     .Contains(filtroDto.GeneroId));
+
                 totalRecordsFiltered += await peliculasQueryable.CountAsync();
             }
 
@@ -182,7 +184,6 @@ namespace PeliculasAPI.Services
             }
 
             await _dbContext.AddAsync(pelicula);
-
             await _dbContext.SaveChangesAsync();
 
             var dto = await GetById(pelicula.Id);

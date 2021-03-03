@@ -16,7 +16,6 @@ import { PageEvent } from '@angular/material/paginator';
 export class PeliculasFiltroComponent implements OnInit {
   generos: GeneroDTO[];
   peliculas: any[];
-  peliculasOriginal: any[];
   filterForm: FormGroup;
   hasError = false;
   totalRecords = 0;
@@ -46,7 +45,6 @@ export class PeliculasFiltroComponent implements OnInit {
     this.leerParamUrl();
 
     this.filterForm.valueChanges.subscribe((values) => {
-      this.peliculas = this.peliculasOriginal;
       this.filtrarPeliculas(values);
       this.escribirParamUrl();
     });
@@ -105,42 +103,10 @@ export class PeliculasFiltroComponent implements OnInit {
         this.totalRecords = resp.totalRecords;
       },
       () => {
-        this.peliculas = this.peliculasOriginal;
+        this.hasError = true;
+        this.peliculas = [];
       }
     );
-
-    // Filtro desde FrontEnd
-    /* const { titulo, generoId, enCines, proximosEstrenos } = values;
-    if (titulo) {
-      this.peliculas = this.peliculas.filter(
-        (pelicula) =>
-          pelicula.titulo.toLowerCase().indexOf(titulo.toLowerCase()) !== -1
-      );
-    }
-
-    if (generoId) {
-      const peliculas = [];
-
-      this.peliculas?.map((pelicula) => {
-        pelicula.generos.forEach((x) => {
-          if (x.id === +generoId) {
-            peliculas.push(pelicula);
-          }
-        });
-      });
-
-      this.peliculas = peliculas;
-    }
-
-    if (enCines) {
-      this.peliculas = this.peliculas.filter((pelicula) => pelicula.enCines);
-    }
-
-    if (proximosEstrenos) {
-      this.peliculas = this.peliculas.filter(
-        (pelicula) => pelicula.proximoEstreno
-      );
-    } */
   }
 
   limpiarFiltros() {

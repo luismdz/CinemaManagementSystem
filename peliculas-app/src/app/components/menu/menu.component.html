@@ -27,37 +27,66 @@
       <mat-icon>search</mat-icon>
       Buscar Peliculas
     </a>
-    <a mat-button
-      routerLink="/peliculas/edit"
-      routerLinkActive="active"
-      class="nav-item">
-      <mat-icon>add</mat-icon>
-      Crear Pelicula
+
+    <div *ngIf="user?.isLoggedIn && false">
+      <a mat-button
+        routerLink="/peliculas/edit"
+        routerLinkActive="active"
+        class="nav-item">
+        <mat-icon>add</mat-icon>
+        Crear Pelicula
+      </a>
+      <a mat-button
+        routerLink="/generos"
+        routerLinkActive="active"
+        class="nav-item">
+        Géneros
+      </a>
+      <a mat-button
+        routerLink="/actores"
+        routerLinkActive="active"
+        class="nav-item">
+        Actores
+      </a>
+      <a mat-button
+        routerLink="/cines"
+        routerLinkActive="active"
+        class="nav-item">
+        Cines
+      </a>
+    </div>
+
+    <span class="spacer"></span>
+
+    <small class="user-data"
+      *ngIf="user?.isLoggedIn">
+      Hola, {{user.name ? user.name : user.email}}
+    </small>
+
+    <div *ngIf="!user || !user.isLoggedIn">
+      <a mat-button
+        routerLink="/auth"
+        routerLinkActive="active"
+        class="nav-item">
+        Iniciar Sesión
+      </a>
+
+      <a mat-button
+        routerLink="/auth/register"
+        routerLinkActive="active"
+        class="nav-item">
+        Registrarse
+      </a>
+    </div>
+
+    <a *ngIf="user?.isLoggedIn"
+      mat-button
+      routerLink="/"
+      class="nav-item"
+      (click)="authSvc.logout()">
+      Cerrar Sesión
     </a>
-    <a mat-button
-      routerLink="/generos"
-      routerLinkActive="active"
-      class="nav-item">
-      Géneros
-    </a>
-    <a mat-button
-      routerLink="/actores"
-      routerLinkActive="active"
-      class="nav-item">
-      Actores
-    </a>
-    <a mat-button
-      routerLink="/cines"
-      routerLinkActive="active"
-      class="nav-item">
-      Cines
-    </a>
-    <a mat-button
-      routerLink="/auth"
-      routerLinkActive="active"
-      class="nav-item">
-      Login
-    </a>
+
   </div>
 
 </nav>

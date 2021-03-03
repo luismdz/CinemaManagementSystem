@@ -22,13 +22,22 @@ nav {
 }
 
 .nav {
-  flex: 1;
+  flex: auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin: 0 3rem;
+  margin-left: 2rem;
 }
 
 .nav .nav-item mat-icon {
   opacity: 0.7;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.user-data {
+  font-size: 14px;
+  margin-right: 1rem;
 }

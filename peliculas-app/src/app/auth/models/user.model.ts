@@ -3,5 +3,5 @@ export interface User {
   email: string;
   password?: string;
   token?: string;
-  isSignedIn?: boolean;
+  isLoggedIn?: boolean;
 }

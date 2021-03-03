@@ -52,16 +52,11 @@
 
   <mat-spinner *ngIf="!peliculas && !hasError"></mat-spinner>
 
-  <div class="no-data-container mat-elevation-z3"
-    *ngIf="hasError">
-    <mat-icon>error_outline</mat-icon>
-    <p>No hay Datos</p>
-  </div>
-
   <mat-paginator class="paginator"
     showFirstLastButtons
     [length]="totalRecords"
     [pageSize]="pageSize"
     [pageSizeOptions]="[5, 10,20, 50]"
-    (page)="actualizarPagina($event)"></mat-paginator>
+    (page)="actualizarPagina($event)">
+  </mat-paginator>
 </div>

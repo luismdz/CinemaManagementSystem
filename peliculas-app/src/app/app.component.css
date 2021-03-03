@@ -17,9 +17,8 @@ mat-toolbar {
   min-height: 64px;
 }
 
-app-buscador {
-  flex: 1;
-  justify-self: flex-end;
+app-menu {
+  width: 100%;
 }
 
 .no-scr {

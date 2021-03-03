@@ -53,8 +53,8 @@ namespace PeliculasAPI.Controllers
             return Ok(actores);
         }
         
-        [HttpGet("buscarPorNombre/{nombre}")]
-        public async Task<ActionResult<List<ActorDto>>> GetByName(string nombre)
+        [HttpGet("buscarPorNombre")]
+        public async Task<ActionResult<List<ActorDto>>> GetByName([FromQuery] string nombre)
         {
             var actores = await actorService.GetByName(nombre);
 

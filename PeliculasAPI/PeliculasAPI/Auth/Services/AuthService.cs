@@ -44,7 +44,13 @@ namespace PeliculasAPI.Services
                 };
             }
 
-            var user = new IdentityUserApp { UserName = newUser.Email, Email = newUser.Email, Name = newUser.Name };
+            var user = new IdentityUserApp
+            { 
+                UserName = newUser.Email, 
+                Email = newUser.Email, 
+                Name = newUser.Name 
+            };
+
             var isCreated = await userManager.CreateAsync(user, newUser.Password);
 
             if (isCreated.Succeeded)

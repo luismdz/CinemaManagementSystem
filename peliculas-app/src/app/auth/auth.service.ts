@@ -3,8 +3,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from './models/user.model';
-import { authResponse } from './models/AuthResponse.model';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { authResponse } from './models/authResponse.model';
+import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,18 +17,13 @@ export class AuthService {
   user$: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {
-    this.user = { email: null, isSignedIn: false };
+    this.user = { email: null, isLoggedIn: false };
 
     this.getUserTokenFromLocalStorage();
   }
 
-  login(): Observable<authResponse> {
-    const obj = {
-      email: 'prueba@test.com',
-      password: '0QNqMz.',
-    };
-
-    return this.http.post(this.apiUrl + '/login', obj).pipe(
+  login(user: User): Observable<authResponse> {
+    return this.http.post(this.apiUrl + '/login', user).pipe(
       map((resp: any) => {
         this.saveUserTokenToLocalStorage(resp);
 
@@ -44,10 +39,26 @@ export class AuthService {
           result: false,
         };
 
-        return of(authResp);
+        return throwError(authResp);
       })
-      // tap(console.log)
     );
+  }
+
+  logout() {
+    localStorage.removeItem(this.localStorageItemName);
+    this.user$.next({ isLoggedIn: false, email: null });
+  }
+
+  getToken() {
+    let token = null;
+
+    if (localStorage.getItem(this.localStorageItemName)) {
+      token = JSON.parse(localStorage.getItem(this.localStorageItemName))[
+        'token'
+      ];
+    }
+
+    return token;
   }
 
   private getUserFromToken(token: string): User {
@@ -56,7 +67,7 @@ export class AuthService {
     this.user = {
       name: dataFromToken.name,
       email: dataFromToken.email,
-      isSignedIn: true,
+      isLoggedIn: true,
     };
 
     this.user$.next(this.user);
@@ -81,7 +92,7 @@ export class AuthService {
   private getUserTokenFromLocalStorage() {
     this.user = {
       email: null,
-      isSignedIn: false,
+      isLoggedIn: false,
     };
 
     if (localStorage.getItem(this.localStorageItemName) !== null) {
@@ -90,14 +101,12 @@ export class AuthService {
       );
 
       if (new Date(expirationTime) < new Date()) {
-        localStorage.removeItem(this.localStorageItemName);
-
-        this.user$.next(this.user);
+        this.logout();
       } else {
         this.user = this.getUserFromToken(token);
       }
-    } else {
-      this.user$.next(this.user);
     }
+
+    this.user$.next(this.user);
   }
 }

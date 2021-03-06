@@ -11,4 +11,4 @@ Aplicacion completa de Peliculas utilizando:
 6. SweetAlert2 para mostrar alertas
 7. Responsive Design
 
-[Click aqui para ver la app desplegada](https://peliculas-app-234.web.app)
+<a href="https://peliculas-app-234.web.app" target="_blank">Click aqui para ver la app desplegada</a>

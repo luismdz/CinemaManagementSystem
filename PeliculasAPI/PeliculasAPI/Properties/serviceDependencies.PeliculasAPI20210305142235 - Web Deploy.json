@@ -11,6 +11,12 @@
       "type": "mssql.azure",
       "connectionId": "PeliculasDBConnStr",
       "secretStore": "AzureAppSettings"
+    },
+    "appInsights1": {
+      "type": "appInsights",
+      "connectionId": "",
+      "suggestion": "true",
+      "ignored": "true"
     }
   }
 }

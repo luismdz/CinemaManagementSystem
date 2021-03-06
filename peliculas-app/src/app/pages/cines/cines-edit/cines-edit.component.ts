@@ -21,7 +21,7 @@ export class CinesEditComponent implements OnInit {
   form: FormGroup;
   cine: CineDTO;
   currentId: number;
-  coordenadasIniciales: any;
+  coordenadasIniciales = [];
 
   get nombre() {
     return this.form.get('nombre');
@@ -71,9 +71,10 @@ export class CinesEditComponent implements OnInit {
         longitud: cine.coordenadas.longitud,
       });
 
-      this.coordenadasIniciales = {
-        ...cine.coordenadas,
-      };
+      const coordenadas = [];
+      coordenadas.push(cine.coordenadas);
+
+      this.coordenadasIniciales = coordenadas;
     }
   }
 

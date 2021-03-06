@@ -1,9 +1,6 @@
 .listado {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1rem;
   padding-bottom: .75rem;
 }
@@ -44,7 +41,6 @@
   vertical-align: middle;
 }
 
-
 .content {
   flex: auto;
   width: 100%;
@@ -58,7 +54,7 @@
 .card .titulo {
   font-weight: 700;
   font-size: 1rem;
-  padding: 0;
+  padding: 0 5px;
 }
 
 .card .content .act-buttons {
@@ -68,20 +64,19 @@
   gap: .5rem;
 }
 
-.card .act-buttons button {
+.card .act-buttons>button {
   width: 100%;
   margin: 0;
 }
 
-@media screen and (max-width:400px) {
+.card .act-buttons>button:first-child {
+  margin-right: .2rem;
+}
 
-  .listado {
-    justify-content: center;
-  }
+@media screen and (max-width:475px) {
 
   .card {
-    max-width: 80%;
-    height: auto;
+    justify-self: center;
   }
 
 }

@@ -1,35 +1,23 @@
-.wrapper {
-  height: 100vh;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+mat-sidenav-container {
+  height: 100%;
+  overflow-y: hidden;
 }
 
-mat-toolbar {
-  position: sticky;
-  position: -webkit-sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100% !important;
-  z-index: 1000;
-  height: auto;
-  min-height: 64px;
-}
-
-app-menu {
+app-header {
   width: 100%;
 }
 
-.no-scr {
+.main-content {
   width: 100%;
-  overflow-y: auto;
+  margin-top: 65px;
+  margin-bottom: 65px;
 }
 
 .container {
-  margin: 2rem auto;
+  margin: auto;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   width: min(1200px, 90%);
-  height: auto;
 }
 
 @media screen and (max-width:575px) {

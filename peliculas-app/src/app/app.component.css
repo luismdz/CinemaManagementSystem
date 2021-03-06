@@ -32,8 +32,12 @@ app-menu {
   height: auto;
 }
 
-@media screen and (max-width:1024px) {
-  app-buscador {
-    display: none;
+@media screen and (max-width:575px) {
+  mat-toolbar {
+    padding: 0;
+  }
+
+  mat-sidenav {
+    width: 60%;
   }
 }

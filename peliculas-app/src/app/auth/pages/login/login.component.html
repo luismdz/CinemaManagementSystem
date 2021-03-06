@@ -1,4 +1,6 @@
-<div class="form-container mat-elevation-z3">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div class="form-container mat-elevation-z3 animate__animated animate__fadeIn animate__faster"
+  *ngIf="!isLoading">
   <form autocomplete="off"
     [formGroup]="loginForm"
     (ngSubmit)="validateLogin()">
@@ -7,12 +9,15 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Correo Electrónico</mat-label>
+
       <input type="text"
         matInput
         formControlName="email">
+
       <mat-error *ngIf="email.errors?.required && email.touched">
         El campo de correo electrónico es obligatorio.
       </mat-error>
+
       <mat-error *ngIf="email.errors?.pattern && email.touched">
         Ingrese un correo electrónico válido.
       </mat-error>
@@ -20,6 +25,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Contraseña</mat-label>
+
       <input [type]="getInputType()"
         matInput
         formControlName="password">
@@ -37,6 +43,7 @@
       <mat-error *ngIf="password.errors?.required && password.touched">
         El campo de contraseña es obligatorio.
       </mat-error>
+
       <mat-error *ngIf="password.errors?.minlength && password.touched">
         La contraseña debe ser terner por lo menos {{ password.errors?.minlength?.requiredLength }} carácteres.
       </mat-error>

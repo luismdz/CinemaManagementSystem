@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errores: string[] = [];
   showPassword = false;
+  isLoading = false;
 
   constructor(
     private authSvc: AuthService,
@@ -59,21 +60,26 @@ export class LoginComponent implements OnInit {
   }
 
   validateLogin() {
-    console.log(this.loginForm.value);
     const { email, password } = this.loginForm.value;
+    this.isLoading = true;
 
     this.authSvc.login({ email, password }).subscribe(
       (resp: authResponse) => {
         if (resp.result) {
           this.router.navigateByUrl('/');
         }
+        this.isLoading = false;
       },
       (err: authResponse) => {
-        this.errores.push(...err.errors);
-
+        if (Array.isArray(err.errors)) {
+          this.errores.push(...err.errors);
+        } else {
+          this.errores.push(
+            ...['Error inesperado, intente más tarde.', err.errors]
+          );
+        }
         this.loginForm.reset();
-
-        console.log(this.loginForm);
+        this.isLoading = false;
       }
     );
   }

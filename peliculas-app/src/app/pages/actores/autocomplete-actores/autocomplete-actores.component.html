@@ -24,71 +24,75 @@
 
 </form>
 
-<table mat-table
-  #table
-  *ngIf="actoresSeleccionados.length > 0"
-  [dataSource]="actoresSeleccionados"
-  class="actores-table mat-elevation-z6"
-  cdkDropList
-  [cdkDropListData]="actoresSeleccionados"
-  cdkDropListOrientation="vertical"
-  (cdkDropListDropped)="drop($event)">
+<div class="table-container">
+  <table mat-table
+    #table
+    *ngIf="actoresSeleccionados.length > 0"
+    [dataSource]="actoresSeleccionados"
+    class="actores-table mat-elevation-z6"
+    cdkDropList
+    [cdkDropListData]="actoresSeleccionados"
+    cdkDropListOrientation="vertical"
+    (cdkDropListDropped)="drop($event)">
 
-  <ng-container matColumnDef="imagen">
-    <th mat-header-cell
-      *matHeaderCellDef> No. </th>
-    <td mat-cell
-      *matCellDef="let actor">
-      <img [src]="actor.foto"
-        [alt]="actor.nombreCompleto"
-        class="thumbnail">
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="imagen"
+      sticky>
+      <th mat-header-cell
+        *matHeaderCellDef> No. </th>
+      <td mat-cell
+        *matCellDef="let actor">
+        <img [src]="actor.foto"
+          [alt]="actor.nombreCompleto"
+          class="thumbnail">
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="nombre">
-    <th mat-header-cell
-      *matHeaderCellDef> Nombre </th>
-    <td mat-cell
-      *matCellDef="let actor">
-      {{actor.nombreCompleto}}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="nombre"
+      sticky>
+      <th mat-header-cell
+        *matHeaderCellDef> Nombre </th>
+      <td mat-cell
+        *matCellDef="let actor">
+        {{actor.nombreCompleto}}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="personaje">
-    <th mat-header-cell
-      *matHeaderCellDef> Personaje </th>
-    <td mat-cell
-      *matCellDef="let actor">
-      <mat-form-field appearance="outline"
-        style="margin-top: 10px;">
-        <mat-label>Personaje</mat-label>
-        <input type="text"
-          autocomplete="off"
-          matInput
-          (input)="enviarActor()"
-          [(ngModel)]="actor.personaje">
-      </mat-form-field>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="personaje"
+      class="input-personaje">
+      <th mat-header-cell
+        *matHeaderCellDef> Personaje </th>
+      <td mat-cell
+        *matCellDef="let actor">
+        <mat-form-field appearance="outline">
+          <mat-label>Personaje</mat-label>
+          <input type="text"
+            autocomplete="off"
+            matInput
+            (input)="enviarActor()"
+            [(ngModel)]="actor.personaje">
+        </mat-form-field>
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="acciones">
-    <th mat-header-cell
-      *matHeaderCellDef> Acciones </th>
-    <td mat-cell
-      *matCellDef="let actor">
-      <button mat-icon-button
-        type="button"
-        (click)="eliminar(actor)"
-        color="warn"
-        style="margin-left: 1rem;">
-        <mat-icon class="mat-18">delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell
+        *matHeaderCellDef> Acciones </th>
+      <td mat-cell
+        *matCellDef="let actor">
+        <button mat-icon-button
+          type="button"
+          (click)="eliminar(actor)"
+          color="warn"
+          style="margin-left: 1rem;">
+          <mat-icon class="mat-18">delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
 
-  <!-- <tr mat-header-row
+    <!-- <tr mat-header-row
     *matHeaderRowDef="['imagen']"></tr> -->
-  <tr mat-row
-    *matRowDef="let row; columns: ['imagen', 'nombre', 'personaje', 'acciones'];"
-    cdkDrag></tr>
-</table>
+    <tr mat-row
+      *matRowDef="let row; columns: ['imagen', 'nombre', 'personaje', 'acciones'];"
+      cdkDrag></tr>
+  </table>
+</div>

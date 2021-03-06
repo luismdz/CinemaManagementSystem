@@ -7,10 +7,7 @@ namespace PeliculasAPI
 {
     public class APIResponse<T>
     {
-        public APIResponse()
-        {
-
-        }
+        public APIResponse() { }
 
         public APIResponse(T response)
         {

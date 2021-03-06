@@ -1,0 +1,55 @@
+.form-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  width: min(100%, 600px);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+form h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+form>mat-form-field {
+  width: 100%;
+  margin-bottom: .25rem;
+}
+
+form button {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: .5rem;
+}
+
+form small {
+  margin: .5rem 0;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+form small a {
+  color: #3f51b5;
+  text-decoration: none;
+}
+
+.error-list {
+  list-style: none;
+  width: 100%;
+  margin: .5rem 0;
+  padding: 0;
+}
+
+.error-list li {
+  font-size: 12px;
+  margin-bottom: .25rem;
+}

@@ -10,7 +10,7 @@ import { CinesEditComponent } from './pages/cines/cines-edit/cines-edit.componen
 import { ActoresEditComponent } from './pages/actores/actores-edit/actores-edit.component';
 import { PeliculasFiltroComponent } from './pages/peliculas/peliculas-filtro/peliculas-filtro.component';
 import { PeliculaDetalleComponent } from './pages/peliculas/pelicula-detalle/pelicula-detalle.component';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './auth/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

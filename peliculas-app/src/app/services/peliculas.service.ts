@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { PeliculaCreacionDTO, PeliculaDTO } from '../models/pelicula.model';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ActorPeliculaDTO } from '../models/actor.model';
 
 @Injectable({
   providedIn: 'root',
@@ -30,20 +31,20 @@ export class PeliculasService {
     );
   }
 
-  obtenerLandingPageInfo() {
-    return this.http.get<any>(`${this.apiUrl}/landingPage`);
-  }
-
   obtenerTodosPorPagina(
     pageNumber: number = 1,
     pageSize: number = 50
-  ): Observable<PeliculaDTO[]> {
+  ): Observable<any> {
     pageNumber = pageNumber < 1 ? 1 : pageNumber;
     pageSize = pageSize < 5 ? 5 : pageSize;
 
     return this.http.get<any>(
       `${this.apiUrl}?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
+  }
+
+  obtenerLandingPageInfo() {
+    return this.http.get<any>(`${this.apiUrl}/landingPage`);
   }
 
   filtrar(valores: any) {
@@ -80,10 +81,13 @@ export class PeliculasService {
           };
         });
 
-        actores = pelicula.actores.map((actor) => {
-          return {
-            ...actor,
+        actores = pelicula.actores.map((actor: any) => {
+          return <ActorPeliculaDTO>{
+            id: actor.id,
+            personaje: actor.personaje,
+            foto: actor.foto,
             nombreCompleto: actor.nombre + ' ' + actor.apellido,
+            orden: actor.orden,
           };
         });
 

@@ -20,7 +20,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [],
@@ -45,7 +46,8 @@ import { MatListModule } from '@angular/material/list';
     MatTableModule,
     MatPaginatorModule,
     DragDropModule,
-    MatListModule,
+    MatSlideToggleModule,
+    MatMenuModule,
   ],
 })
 export class MaterialModule {}

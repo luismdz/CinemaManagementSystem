@@ -6,9 +6,10 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { MaterialModule } from '../material.module';
 import { CommonModule } from '@angular/common';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, UsuariosComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

@@ -6,12 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // External dependencies Modules
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MarkdownModule } from 'ngx-markdown';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 // Components
 import { AppComponent } from './app.component';
@@ -33,7 +34,10 @@ import { MapaComponent } from './components/mapa/mapa.component';
 import { SelectorMultipleComponent } from './components/selector-multiple/selector-multiple.component';
 import { AutocompleteActoresComponent } from './pages/actores/autocomplete-actores/autocomplete-actores.component';
 import { PeliculaDetalleComponent } from './pages/peliculas/pelicula-detalle/pelicula-detalle.component';
+import { RatingComponent } from './components/rating/rating.component';
 import { ImagePipe } from './pipes/image.pipe';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,8 @@ import { ImagePipe } from './pipes/image.pipe';
     AutocompleteActoresComponent,
     PeliculaDetalleComponent,
     ImagePipe,
+    RatingComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,12 +73,19 @@ import { ImagePipe } from './pipes/image.pipe';
     FormsModule,
     HttpClientModule,
     NgxSpinnerModule,
+    FlexLayoutModule,
     MarkdownModule.forRoot({
       sanitize: SecurityContext.NONE,
     }),
     LeafletModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,29 +1,99 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from './models/user.model';
 import { authResponse } from './models/authResponse.model';
-import { Observable, of, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiURL + '/auth';
+  private readonly apiUrl = environment.apiURL + '/auth';
+  private readonly localStorageItemName = 'userToken';
   private user: User;
-  private localStorageItemName = 'userToken';
 
   user$: BehaviorSubject<User> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) {
-    this.user = { email: null, isLoggedIn: false };
-
     this.getUserTokenFromLocalStorage();
+  }
+
+  obtenerUsuariosPorPagina(
+    pageNumber: number = 1,
+    pageSize: number = 50
+  ): Observable<User[]> {
+    pageNumber = pageNumber < 1 ? 1 : pageNumber;
+    pageSize = pageSize < 5 ? 5 : pageSize;
+
+    return this.http
+      .get<any>(
+        `${this.apiUrl}/users?pageNumber=${pageNumber}&pageSize=${pageSize}`
+      )
+      .pipe(
+        map((resp: any) => {
+          const users = resp.data.map((x: User) => {
+            return <User>{
+              ...x,
+              isAdmin: x.isAdmin ? true : false,
+            };
+          });
+
+          return {
+            ...resp,
+            data: users,
+          };
+        })
+      );
+  }
+
+  hacerAdmin(email: string) {
+    const headers = new HttpHeaders('Content-Type: application/json');
+    return this.http.post<any>(
+      `${this.apiUrl}/addAdmin`,
+      JSON.stringify(email),
+      { headers: headers }
+    );
+  }
+
+  removerAdmin(email: string) {
+    const headers = new HttpHeaders('Content-Type: application/json');
+    return this.http.post<any>(
+      `${this.apiUrl}/removeAdmin`,
+      JSON.stringify(email),
+      { headers: headers }
+    );
   }
 
   login(user: User): Observable<authResponse> {
     return this.http.post(this.apiUrl + '/login', user).pipe(
+      map((resp: any) => {
+        this.saveUserTokenToLocalStorage(resp);
+
+        return <authResponse>{
+          user: this.getUserFromToken(resp.token),
+          expirationTime: resp.expirationTime,
+          result: true,
+        };
+      }),
+      catchError((err: HttpErrorResponse) => {
+        const authResp: authResponse = {
+          errors: err.error?.errors,
+          result: false,
+        };
+
+        return throwError(authResp);
+      })
+    );
+  }
+
+  register(user: User): Observable<authResponse> {
+    return this.http.post(this.apiUrl + '/register', user).pipe(
       map((resp: any) => {
         this.saveUserTokenToLocalStorage(resp);
 
@@ -67,6 +137,7 @@ export class AuthService {
     this.user = {
       name: dataFromToken.name,
       email: dataFromToken.email,
+      isAdmin: dataFromToken.role === 'admin' ? true : false,
       isLoggedIn: true,
     };
 

@@ -1,6 +1,6 @@
 import { GeneroDTO } from './generos.model';
 import { CineDTO } from './cine.model';
-import { ActorDTO } from './actor.model';
+import { ActorDTO, ActorPeliculaDTO } from './actor.model';
 
 export interface PeliculaCreacionDTO {
   titulo: string;
@@ -10,15 +10,9 @@ export interface PeliculaCreacionDTO {
   proximoEstreno?: boolean;
   fechaLanzamiento?: Date;
   poster?: File;
-  precio?: number;
   generosIds?: number[];
   cinesIds?: number[];
-  actores?: [
-    {
-      id: number;
-      personaje?: string;
-    }
-  ];
+  actores?: ActorDTO[];
 }
 
 export interface PeliculaDTO {
@@ -30,8 +24,9 @@ export interface PeliculaDTO {
   proximoEstreno?: boolean;
   fechaLanzamiento?: Date;
   poster?: string;
-  precio?: number;
+  puntuacion: number;
+  usuarioPuntuacion?: number;
   generos?: GeneroDTO[];
   cines?: CineDTO[];
-  actores?: ActorDTO[];
+  actores?: ActorPeliculaDTO[];
 }

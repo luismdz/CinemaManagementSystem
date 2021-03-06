@@ -3,6 +3,8 @@ import { PeliculaDTO } from '../../../models/pelicula.model';
 import { PeliculasService } from '../../../services/peliculas.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../../auth/auth.service';
+import { User } from '../../../auth/models/user.model';
 
 @Component({
   selector: 'app-listado-peliculas',
@@ -11,10 +13,16 @@ import Swal from 'sweetalert2';
 })
 export class ListadoPeliculasComponent implements OnInit {
   @Input() peliculas: PeliculaDTO[] = [];
+  user: User;
 
-  constructor(private peliculaSvc: PeliculasService) {}
+  constructor(
+    private peliculaSvc: PeliculasService,
+    private authSvc: AuthService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authSvc.user$.subscribe((user) => (this.user = user));
+  }
 
   eliminarPelicula(id: number) {
     Swal.fire({

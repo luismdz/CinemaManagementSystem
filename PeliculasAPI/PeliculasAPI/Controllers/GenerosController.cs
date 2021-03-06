@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PeliculasAPI.DTOs;
@@ -14,6 +16,7 @@ namespace PeliculasAPI.Controllers
 {
     [Route("api/generos")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     public class GenerosController : ControllerBase
     {
         private readonly IGeneroService _generoService;
@@ -44,6 +47,7 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet("List")]
+        [AllowAnonymous]
         public ActionResult<GeneroDto> GetAll()
         {
             var generos = _generoService.GetAll();

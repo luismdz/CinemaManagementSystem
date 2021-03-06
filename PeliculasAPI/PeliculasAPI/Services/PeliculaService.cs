@@ -61,7 +61,24 @@ namespace PeliculasAPI.Services
                 .Include(x => x.PeliculasCines).ThenInclude(x => x.Cine)
                 .FirstOrDefaultAsync();
 
-            return mapper.Map<PeliculaDto>(pelicula);
+            if(pelicula is null)
+            {
+                return null;
+            }
+            
+            var peliculaDto = mapper.Map<PeliculaDto>(pelicula);
+            var promedio = 0.0;
+
+            if (await _dbContext.Ratings.AnyAsync(x => x.PeliculaId == id))
+            {
+                promedio = await _dbContext.Ratings
+                    .Where(x => x.PeliculaId == id)
+                    .AverageAsync(x => x.Puntuacion);
+            }
+
+            peliculaDto.Puntuacion = promedio;
+
+            return peliculaDto;
         }
 
         public async Task<LandingPageInfoDto> GetLandingPageInfo()

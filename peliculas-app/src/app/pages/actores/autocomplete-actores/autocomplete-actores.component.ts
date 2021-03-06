@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 import { ActoresService } from '../../../services/actores.service';
 import { MatTable } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { ActorDTO } from '../../../models/actor.model';
+import { ActorDTO, ActorPeliculaDTO } from '../../../models/actor.model';
 import { startWith } from 'rxjs/operators';
 
 @Component({
@@ -22,11 +22,11 @@ import { startWith } from 'rxjs/operators';
 })
 export class AutocompleteActoresComponent implements OnInit, OnChanges {
   control: FormControl;
-  actoresFiltrados: ActorDTO[] = [];
-  actoresSeleccionados: ActorDTO[] = [];
+  actoresFiltrados: ActorPeliculaDTO[] = [];
+  actoresSeleccionados: ActorPeliculaDTO[] = [];
 
   @ViewChild(MatTable) table: MatTable<any>;
-  @Input() actoresIniciales: any[];
+  @Input() actoresIniciales: ActorPeliculaDTO[];
   @Output() selectedActors: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private actorSvc: ActoresService) {
@@ -39,7 +39,7 @@ export class AutocompleteActoresComponent implements OnInit, OnChanges {
       .subscribe((nombre: string) => {
         if (nombre.length > 0) {
           this.actorSvc.obtenerActorPorNombre(nombre).subscribe((actores) => {
-            this.actoresFiltrados = actores;
+            this.actoresFiltrados = <ActorPeliculaDTO[]>actores;
           });
         } else {
           this.actoresFiltrados = [];

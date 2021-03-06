@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using PeliculasAPI.Auth;
 using PeliculasAPI.Auth.Services;
+using PeliculasAPI.DTOs;
 using PeliculasAPI.Responses;
 using System;
 using System.Collections.Generic;
@@ -18,16 +20,62 @@ namespace PeliculasAPI.Services
     {
         private readonly UserManager<IdentityUserApp> userManager;
         private readonly SignInManager<IdentityUserApp> signInManager;
+        private readonly AppDbContext dbContext;
         private readonly IConfiguration configuration;
 
         public AuthService(
             UserManager<IdentityUserApp> userManager,
             SignInManager<IdentityUserApp> signInManager,
+            AppDbContext dbContext,
             IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.dbContext = dbContext;
             this.configuration = configuration;
+        }
+
+        public async Task<(List<UsuarioDto>, int)> GetAllUsers()
+        {
+            var usuarios = await 
+                (from usuario in dbContext.Users
+                 join claim in dbContext.UserClaims 
+                    on usuario.Id equals claim.UserId into uc
+                 from claim in uc.DefaultIfEmpty()
+                 select new UsuarioDto()
+                 {
+                     Name = usuario.Name,
+                     Email = usuario.Email,
+                     IsAdmin = claim.ClaimType == "role" && claim.ClaimValue == "admin"
+                 }).ToListAsync();
+
+            var totalRecords = await dbContext.Users.CountAsync();
+            return (usuarios, totalRecords);
+        }
+
+        public async Task<APIResponse<bool>> GiveAdminPriv(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            await userManager.AddClaimAsync(user, new Claim("role", "admin"));
+
+            return new APIResponse<bool>
+            {
+                Data = true,
+                Message = "OK"
+            };
+        } 
+        
+        public async Task<APIResponse<bool>> RemoveAdminPriv(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            await userManager.RemoveClaimAsync(user, new Claim("role", "admin"));
+
+            return new APIResponse<bool>
+            {
+                Data = true,
+                Message = "OK"
+            };
         }
 
         public async Task<AuthResponse> Register(UserRegistrationRequestDto newUser)

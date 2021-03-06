@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PeliculasAPI.DTOs;
 using PeliculasAPI.Responses;
 using PeliculasAPI.Services;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 namespace PeliculasAPI.Controllers
 {
     [Route("api/actores")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     [ApiController]
     public class ActoresController : ControllerBase
     {
@@ -27,7 +30,7 @@ namespace PeliculasAPI.Controllers
 
             if (actores == null)
             {
-                return BadRequest();
+                return NoContent();
             }
 
             int totalRecords = actores.Count();

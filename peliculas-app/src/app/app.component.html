@@ -1,12 +1,27 @@
-<div class="wrapper">
-  <mat-toolbar color="primary"
-    class="shadow">
-    <app-menu></app-menu>
-  </mat-toolbar>
+<mat-sidenav-container>
 
-  <div class="no-scr">
-    <div class="container">
-      <router-outlet></router-outlet>
+  <mat-sidenav mode="push"
+    align="start"
+    #sidenav>
+
+    <app-menu [mode]="'column'"
+      (sidenavToggle)="sidenav.toggle()">
+    </app-menu>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div class="wrapper">
+
+      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+
+      <div class="no-scr">
+        <div class="container">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+
     </div>
-  </div>
-</div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

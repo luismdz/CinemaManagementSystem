@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PeliculasAPI.Auth;
 using PeliculasAPI.Auth.Services;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace PeliculasAPI
 {
@@ -21,6 +22,7 @@ namespace PeliculasAPI
     {
         public Startup(IConfiguration configuration)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             Configuration = configuration;
         }
 
@@ -33,6 +35,7 @@ namespace PeliculasAPI
             services.AddTransient<IActorService, ActorService>();
             services.AddTransient<ICineService, CineService>();
             services.AddTransient<IPeliculaService, PeliculaService>();
+            services.AddTransient<IRatingService, RatingService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IAlmacenadorArchivos, AlmacenadorAzureStorage>();
 
@@ -66,6 +69,11 @@ namespace PeliculasAPI
                 options.Password.RequiredLength = 6;
             });
 
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy("EsAdmin", policy => policy.RequireClaim("role", "admin"));
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt => opt.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -82,6 +90,7 @@ namespace PeliculasAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PeliculasAPI", Version = "v1" });
             });
+            services.AddApplicationInsightsTelemetry(Configuration["APPINSIGHTS_CONNECTIONSTRING"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

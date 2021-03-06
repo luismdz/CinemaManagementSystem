@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PeliculasAPI.DTOs;
 using PeliculasAPI.Responses;
@@ -12,6 +14,7 @@ namespace PeliculasAPI.Controllers
 {
     [Route("api/cines")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     public class CinesController : ControllerBase
     {
         private readonly ICineService cineService;
@@ -48,6 +51,7 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet("List")]
+        [AllowAnonymous]
         public ActionResult<List<CineDto>> GetAll()
         {
             var cines = cineService.GetAll();

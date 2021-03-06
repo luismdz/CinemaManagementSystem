@@ -1,9 +1,9 @@
-<div class="pelicula-container"
+<div class="pelicula-container animate__animated animate__fadeIn animate__faster"
   *ngIf="pelicula">
 
   <div class="titulo">
     <h2>
-      {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento.getFullYear() }})
+      {{ pelicula.titulo }} ({{ pelicula.fechaLanzamiento | date:'y' }})
     </h2>
     <mat-chip selected
       color="accent">
@@ -39,9 +39,19 @@
         <small>{{ pelicula.fechaLanzamiento | date }}</small>
       </div>
 
-      <div class="rating">
-        <small><strong>Promedio: </strong>0.0/5</small>
-        <small><strong>Tu voto: </strong>*****</small>
+      <div class="rating-container">
+        <small class="avg">
+          <span>Promedio:</span>
+          <mat-chip selected>
+            {{ pelicula.puntuacion | number: '1.1'}}/5
+          </mat-chip>
+        </small>
+
+        <small class="rating">
+          <span>Tu puntuación:</span>
+          <app-rating [rating]="rating"
+            (rated)="obtenerRating($event)"></app-rating>
+        </small>
       </div>
 
       <div class="cast"
@@ -62,6 +72,7 @@
               <mat-divider></mat-divider>
             </div>
           </div>
+
         </div>
       </div>
 

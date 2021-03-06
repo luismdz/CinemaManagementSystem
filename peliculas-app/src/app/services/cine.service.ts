@@ -37,7 +37,7 @@ export class CineService {
   obtenerTodosPorPagina(
     pageNumber: number = 1,
     pageSize: number = 50
-  ): Observable<CineDTO[]> {
+  ): Observable<any> {
     pageNumber = pageNumber < 1 ? 1 : pageNumber;
     pageSize = pageSize < 5 ? 5 : pageSize;
 

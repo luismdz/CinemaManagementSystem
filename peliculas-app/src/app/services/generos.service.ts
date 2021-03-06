@@ -19,7 +19,7 @@ export class GenerosService {
   obtenerTodosPorPagina(
     pageNumber: number = 1,
     pageSize: number = 50
-  ): Observable<GeneroDTO[]> {
+  ): Observable<any> {
     pageNumber = pageNumber < 1 ? 1 : pageNumber;
     pageSize = pageSize < 5 ? 5 : pageSize;
 

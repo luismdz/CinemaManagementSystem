@@ -15,7 +15,7 @@
 </mat-form-field>
 
 <mat-form-field appearance="fill"
-  *ngIf="!data">
+  *ngIf="!data || data?.length === 0">
   <mat-label>{{ label }}</mat-label>
   <mat-select>
     <mat-option *ngIf="!data"

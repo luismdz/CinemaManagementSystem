@@ -87,7 +87,7 @@ namespace PeliculasAPI.Services
             var today = DateTime.Now;
 
             var proximosEstrenos = await _dbContext.Peliculas
-                .Where(x => x.FechaLanzamiento > today)
+                .Where(x => x.FechaLanzamiento > today && !x.EnCines)
                 .OrderBy(x => x.FechaLanzamiento)
                 .Take(top)
                 .Include(x => x.PeliculasActores).ThenInclude(x => x.Actor)

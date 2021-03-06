@@ -11,16 +11,12 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="wrapper">
+    <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
 
-      <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
-
-      <div class="no-scr">
-        <div class="container">
-          <router-outlet></router-outlet>
-        </div>
+    <div class="main-content">
+      <div class="container">
+        <router-outlet></router-outlet>
       </div>
-
     </div>
   </mat-sidenav-content>
 

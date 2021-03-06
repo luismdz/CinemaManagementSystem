@@ -1,0 +1,10 @@
+<div class="rating">
+  <button mat-icon-button
+    *ngFor="let star of starArr; index as i"
+    [id]="'star_'+i"
+    (mouseenter)="handleMouseEnter(i)"
+    (mouseleave)="handleMouseLeave()"
+    (click)="rate(i+1)">
+    <mat-icon>{{showIcon(i)}}</mat-icon>
+  </button>
+</div>

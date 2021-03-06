@@ -5,16 +5,15 @@ import {
   OnInit,
   Output,
   ViewChild,
+  OnChanges,
 } from '@angular/core';
+
 import { FormControl } from '@angular/forms';
-import { ActorDTO } from '../../../models/actor.model';
 import { ActoresService } from '../../../services/actores.service';
-import { Observable, pipe } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatTable } from '@angular/material/table';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { OnChanges } from '@angular/core';
+import { ActorDTO, ActorPeliculaDTO } from '../../../models/actor.model';
+import { startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-autocomplete-actores',
@@ -23,11 +22,11 @@ import { OnChanges } from '@angular/core';
 })
 export class AutocompleteActoresComponent implements OnInit, OnChanges {
   control: FormControl;
-  actoresFiltrados: ActorDTO[] = [];
-  actoresSeleccionados: ActorDTO[] = [];
+  actoresFiltrados: ActorPeliculaDTO[] = [];
+  actoresSeleccionados: ActorPeliculaDTO[] = [];
 
   @ViewChild(MatTable) table: MatTable<any>;
-  @Input() actoresIniciales: any[];
+  @Input() actoresIniciales: ActorPeliculaDTO[];
   @Output() selectedActors: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private actorSvc: ActoresService) {
@@ -35,15 +34,17 @@ export class AutocompleteActoresComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.control.valueChanges.subscribe((nombre: string) => {
-      if (nombre.length > 0) {
-        this.actorSvc.obtenerActorPorNombre(nombre).subscribe((actores) => {
-          this.actoresFiltrados = actores;
-        });
-      } else {
-        this.actoresFiltrados = [];
-      }
-    });
+    this.control.valueChanges
+      .pipe(startWith(' '))
+      .subscribe((nombre: string) => {
+        if (nombre.length > 0) {
+          this.actorSvc.obtenerActorPorNombre(nombre).subscribe((actores) => {
+            this.actoresFiltrados = <ActorPeliculaDTO[]>actores;
+          });
+        } else {
+          this.actoresFiltrados = [];
+        }
+      });
   }
 
   ngOnChanges() {

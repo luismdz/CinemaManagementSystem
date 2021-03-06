@@ -17,7 +17,8 @@
         </p>
       </mat-card-content>
 
-      <mat-card-actions class="act-buttons">
+      <mat-card-actions class="act-buttons"
+        *ngIf="user?.isLoggedIn && user?.isAdmin">
         <button mat-raised-button
           color="primary"
           [routerLink]="['/peliculas', 'edit', pelicula.id]">

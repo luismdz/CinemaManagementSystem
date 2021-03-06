@@ -61,7 +61,24 @@ namespace PeliculasAPI.Services
                 .Include(x => x.PeliculasCines).ThenInclude(x => x.Cine)
                 .FirstOrDefaultAsync();
 
-            return mapper.Map<PeliculaDto>(pelicula);
+            if(pelicula is null)
+            {
+                return null;
+            }
+            
+            var peliculaDto = mapper.Map<PeliculaDto>(pelicula);
+            var promedio = 0.0;
+
+            if (await _dbContext.Ratings.AnyAsync(x => x.PeliculaId == id))
+            {
+                promedio = await _dbContext.Ratings
+                    .Where(x => x.PeliculaId == id)
+                    .AverageAsync(x => x.Puntuacion);
+            }
+
+            peliculaDto.Puntuacion = promedio;
+
+            return peliculaDto;
         }
 
         public async Task<LandingPageInfoDto> GetLandingPageInfo()
@@ -96,7 +113,7 @@ namespace PeliculasAPI.Services
 
         public async Task<(List<PeliculaDto>, int)> GetFiltered(PeliculaFiltroDto filtroDto)
         {
-            var peliculasQueryable = this._dbContext.Peliculas.AsQueryable();
+            var peliculasQueryable = _dbContext.Peliculas.AsQueryable();
             int totalRecords = await peliculasQueryable.CountAsync();
             int totalRecordsFiltered = 0;
             
@@ -118,7 +135,8 @@ namespace PeliculasAPI.Services
             if(filtroDto.ProximosEstrenos)
             {
                 peliculasQueryable = peliculasQueryable
-                    .Where(x => x.FechaLanzamiento > DateTime.Now || !x.EnCines);
+                    .Where(x => x.FechaLanzamiento > DateTime.Now);
+
                 totalRecordsFiltered += await peliculasQueryable.CountAsync();
             }
 
@@ -127,6 +145,7 @@ namespace PeliculasAPI.Services
                 peliculasQueryable = peliculasQueryable
                     .Where(x => x.PeliculasGeneros.Select(y => y.GeneroId)
                     .Contains(filtroDto.GeneroId));
+
                 totalRecordsFiltered += await peliculasQueryable.CountAsync();
             }
 
@@ -182,7 +201,6 @@ namespace PeliculasAPI.Services
             }
 
             await _dbContext.AddAsync(pelicula);
-
             await _dbContext.SaveChangesAsync();
 
             var dto = await GetById(pelicula.Id);

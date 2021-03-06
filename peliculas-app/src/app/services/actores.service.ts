@@ -31,7 +31,7 @@ export class ActoresService {
   obtenerTodosPorPagina(
     pageNumber: number = 1,
     pageSize: number = 50
-  ): Observable<ActorDTO[]> {
+  ): Observable<any> {
     pageNumber = pageNumber < 1 ? 1 : pageNumber;
     pageSize = pageSize < 5 ? 5 : pageSize;
 
@@ -46,7 +46,7 @@ export class ActoresService {
 
   obtenerActorPorNombre(nombre: string) {
     return this.http
-      .get<ActorDTO[]>(`${this.apiUrl}/buscarPorNombre/${nombre}`)
+      .get<ActorDTO[]>(`${this.apiUrl}/buscarPorNombre?nombre=${nombre}`)
       .pipe(
         map((resp) => {
           const actores = resp.map((actor) => {

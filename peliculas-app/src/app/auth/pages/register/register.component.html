@@ -1,0 +1,98 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+
+<div class="form-container mat-elevation-z3 animate__animated animate__fadeIn animate__faster"
+  *ngIf="!isLoading">
+
+  <form autocomplete="off"
+    [formGroup]="registerForm"
+    (ngSubmit)="registerUser()">
+
+    <h2>Registro de Usuario</h2>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre Completo</mat-label>
+
+      <input type="text"
+        matInput
+        formControlName="nombre">
+
+      <mat-error *ngIf="nombre.errors?.required && nombre.touched">
+        El campo nombre es obligatorio.
+      </mat-error>
+
+      <mat-error *ngIf="nombre.errors?.minlength && nombre.touched">
+        El nombre debe ser terner por lo menos {{ nombre.errors?.minlength?.requiredLength }} carácteres.
+      </mat-error>
+
+      <mat-error *ngIf="nombre.errors?.pattern && nombre.touched">
+        El Nombre ingresado no es valido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Correo Electrónico</mat-label>
+
+      <input type="text"
+        matInput
+        formControlName="email">
+
+      <mat-error *ngIf="email.errors?.required && email.touched">
+        El campo de correo electrónico es obligatorio.
+      </mat-error>
+
+      <mat-error *ngIf="email.errors?.pattern && email.touched">
+        Ingrese un correo electrónico válido.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contraseña</mat-label>
+
+      <input [type]="getInputType()"
+        matInput
+        formControlName="password">
+
+      <button mat-icon-button
+        matSuffix
+        color="primary"
+        type="button"
+        (click)="toggleShowPassword()">
+        <mat-icon class="mat-18">
+          {{ showPassword ? 'password' : 'remove_red_eye' }}
+        </mat-icon>
+      </button>
+
+      <mat-error *ngIf="password.errors?.required && password.touched">
+        El campo de contraseña es obligatorio.
+      </mat-error>
+
+      <mat-error *ngIf="password.errors?.minlength && password.touched">
+        La contraseña debe ser terner por lo menos {{ password.errors?.minlength?.requiredLength }} carácteres.
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button
+      color="primary"
+      [disabled]="registerForm.invalid">
+      Registrarse
+    </button>
+
+    <ul class="error-list"
+      *ngIf="errores.length > 0">
+      <li *ngFor="let error of errores">
+        <mat-error>
+          {{error}}
+        </mat-error>
+      </li>
+    </ul>
+
+    <small>
+      Usuario registrado?
+      <a routerLink="/auth/login"
+        color="primary">
+        Inicie sesión
+      </a>
+    </small>
+
+  </form>
+</div>

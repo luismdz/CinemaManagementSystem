@@ -168,7 +168,6 @@ export class ActoresEditComponent implements OnInit {
 
     if (this.editMode) {
       // ...Actualizar actor
-      console.log(this.actor);
       this.actorSvc.actualizarActor(this.currentId, this.actor).subscribe(
         (resp: ActorDTO) => {
           this.spinner.hide();

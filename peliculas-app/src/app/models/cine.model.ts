@@ -1,8 +1,8 @@
 export interface CineDTO {
-    id?: number | string;
-    nombre: string;
-    coordenadas: {
-        latitud: number,
-        longitud: number
-    };
+  id?: number;
+  nombre: string;
+  coordenadas: {
+    latitud: number;
+    longitud: number;
+  };
 }

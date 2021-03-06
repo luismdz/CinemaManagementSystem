@@ -1,5 +1,5 @@
 form {
-  width: min(400px, 100%);
+  width: min(500px, 100%);
   padding: 1.5rem;
 }
 
@@ -13,8 +13,11 @@ mat-form-field {
   margin-bottom: 1rem;
 }
 
+.act-btn {
+  display: flex;
+  gap: 1rem;
+}
+
 .act-btn button {
-  display: block;
   width: 100%;
-  margin-bottom: .75rem;
 }

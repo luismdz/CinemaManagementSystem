@@ -20,6 +20,7 @@ import { CineDTO } from 'src/app/models/cine.model';
 import { ActorDTO } from '../../../models/actor.model';
 import Swal from 'sweetalert2';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-peliculas-edit',
@@ -55,7 +56,8 @@ export class PeliculasEditComponent implements OnInit {
     private router: Router,
     private peliculaSvc: PeliculasService,
     private generosSvc: GenerosService,
-    private cineSvc: CineService
+    private cineSvc: CineService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +78,7 @@ export class PeliculasEditComponent implements OnInit {
       actores: '',
     });
     // Creando el formulario
-
+    this.spinner.show();
     this.generosSvc.obtenerTodos().subscribe((resp: any) => {
       this.generos = resp;
 
@@ -122,7 +124,6 @@ export class PeliculasEditComponent implements OnInit {
               cinesIds: this.pelicula.cines.map((x) => x.id),
               actores: this.pelicula.actores,
             };
-            console.log(dataToForm);
 
             this.form.patchValue(dataToForm);
             const { cinesIds, generosIds, actores } = this.form.value;
@@ -131,6 +132,9 @@ export class PeliculasEditComponent implements OnInit {
             this.cinesPeliculaEditar = cinesIds;
             this.actoresPeliculaEditar = actores;
           });
+        this.spinner.hide();
+      } else {
+        this.spinner.hide();
       }
     });
   }
@@ -192,7 +196,6 @@ export class PeliculasEditComponent implements OnInit {
 
     if (this.editMode) {
       // ...update
-      console.log(nuevaPelicula);
       this.peliculaSvc
         .actualizarPelicula(this.currentId, nuevaPelicula)
         .subscribe(

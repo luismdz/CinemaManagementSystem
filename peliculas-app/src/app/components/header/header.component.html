@@ -1,0 +1,83 @@
+<mat-toolbar color="primary"
+  class="shadow">
+
+  <button mat-icon-button
+    fxShow
+    fxHide.gt-sm
+    (click)="onToggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <span class="logo"
+    fxShow.gt-xs
+    fxHide>
+    <a mat-button
+      routerLink='/'>
+      <mat-icon>local_movies</mat-icon>
+      <span class="title">
+        Angular Peliculas
+      </span>
+    </a>
+  </span>
+
+  <app-menu fxShow.gt-sm
+    fxHide></app-menu>
+
+  <span class="spacer"></span>
+
+  <a mat-button
+    [matMenuTriggerFor]="menu"
+    class="menu-btn">
+
+    <div class="menu-trg">
+      <small class="user-data"
+        *ngIf="user?.isLoggedIn">
+        Hola, {{user.name ? user.name : user.email}}
+      </small>
+      <mat-icon>more_vert</mat-icon>
+    </div>
+  </a>
+
+  <mat-menu #menu="matMenu">
+    <a *ngIf="user?.isLoggedIn && user?.isAdmin"
+      mat-menu-item
+      routerLink="/auth/usuarios"
+      routerLinkActive="active"
+      class="nav-item">
+      <span class="menu-item">
+        Usuarios
+        <mat-icon color="primary">groups</mat-icon>
+      </span>
+    </a>
+
+    <a *ngIf="user?.isLoggedIn"
+      mat-menu-item
+      routerLink="/"
+      (click)="authSvc.logout()">
+      <span class="menu-item">
+        Cerrar Sesión
+        <mat-icon color="primary">logout</mat-icon>
+      </span>
+    </a>
+
+    <a mat-menu-item
+      *ngIf="!user || !user.isLoggedIn"
+      routerLink="/auth/login"
+      routerLinkActive="active">
+      <span class="menu-item">
+        Iniciar Sesión
+        <mat-icon color="primary">login</mat-icon>
+      </span>
+    </a>
+
+    <a mat-menu-item
+      *ngIf="!user || !user.isLoggedIn"
+      routerLink="/auth/register"
+      routerLinkActive="active">
+      <span class="menu-item">
+        Registrarse
+        <mat-icon color="primary">group_add</mat-icon>
+      </span>
+    </a>
+  </mat-menu>
+</mat-toolbar>

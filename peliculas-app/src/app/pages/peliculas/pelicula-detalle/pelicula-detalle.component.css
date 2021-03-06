@@ -3,6 +3,26 @@
   margin: 0 auto;
 }
 
+.titulo {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 1.2rem 0;
+}
+
+.titulo h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.titulo mat-chip,
+.rating-container mat-chip {
+  font-size: 12px;
+  margin-left: .75rem;
+  margin-top: 2px;
+  cursor: initial;
+  user-select: none;
+}
 
 mat-chip {
   cursor: pointer;
@@ -50,19 +70,31 @@ mat-chip {
   font-size: 14px;
 }
 
-.rating {
+.rating-container {
   display: flex;
   flex-direction: column;
   margin-top: .5rem;
 }
 
-.rating>small {
+.rating-container>small {
   margin-bottom: .5rem;
   font-size: 14px;
+  font-weight: 600;
 }
 
-.rating small:last-child {
-  margin-bottom: 0;
+.rating-container>small span {
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.rating-container .avg small mat-chip {
+  margin-left: .25rem;
+}
+
+.rating,
+.avg {
+  display: flex;
+  align-items: center;
 }
 
 .cast {
@@ -80,10 +112,6 @@ mat-chip {
   align-items: center;
   margin-bottom: .25rem;
 }
-
-/* .cast-inner-content:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-} */
 
 .cast-inner-content .actor-info {
   margin-left: 1rem;
@@ -135,3 +163,41 @@ img.actor-foto {
   width: 100%;
   height: 200px;
 } */
+
+@media screen and (max-width:575px) {
+
+  .pelicula-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .titulo {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .titulo mat-chip {
+    margin-top: .75rem;
+    margin-left: 0;
+  }
+
+  .top-content {
+    flex-direction: column;
+    max-height: 100%;
+  }
+
+  .text-content {
+    max-height: 600px;
+    margin-top: 1rem;
+  }
+
+  .bottom-content {
+    margin-top: 1rem;
+  }
+
+  .bottom-content .trailer-container iframe {
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,5 +1,7 @@
 mat-tab-group {
   margin-bottom: 1.5rem;
+  border: 1px solid lightgray;
+  width: 100%;
 }
 
 .tab-icon {
@@ -19,4 +21,8 @@ mat-form-field textarea {
 markdown {
   /* text-align: justify; */
   max-width: 100%;
+}
+
+markdown p {
+  padding: 0 10px;
 }

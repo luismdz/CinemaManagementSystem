@@ -1,15 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { SecurityContext } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
+// External dependencies Modules
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { MarkdownModule } from 'ngx-markdown';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+// Components
 import { AppComponent } from './app.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -25,13 +30,14 @@ import { BuscadorComponent } from './components/buscador/buscador.component';
 import { PeliculasFiltroComponent } from './pages/peliculas/peliculas-filtro/peliculas-filtro.component';
 import { InputImgComponent } from './components/input-img/input-img.component';
 import { InputMarkdownComponent } from './components/input-markdown/input-markdown.component';
-import { MarkdownModule } from 'ngx-markdown';
-import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapaComponent } from './components/mapa/mapa.component';
 import { SelectorMultipleComponent } from './components/selector-multiple/selector-multiple.component';
 import { AutocompleteActoresComponent } from './pages/actores/autocomplete-actores/autocomplete-actores.component';
 import { PeliculaDetalleComponent } from './pages/peliculas/pelicula-detalle/pelicula-detalle.component';
+import { RatingComponent } from './components/rating/rating.component';
 import { ImagePipe } from './pipes/image.pipe';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +61,8 @@ import { ImagePipe } from './pipes/image.pipe';
     AutocompleteActoresComponent,
     PeliculaDetalleComponent,
     ImagePipe,
+    RatingComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,12 +73,19 @@ import { ImagePipe } from './pipes/image.pipe';
     FormsModule,
     HttpClientModule,
     NgxSpinnerModule,
+    FlexLayoutModule,
     MarkdownModule.forRoot({
-      sanitize: SecurityContext.NONE
+      sanitize: SecurityContext.NONE,
     }),
-    LeafletModule
+    LeafletModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

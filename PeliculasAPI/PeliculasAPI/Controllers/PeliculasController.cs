@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -14,13 +16,16 @@ namespace PeliculasAPI.Controllers
 {
     [Route("api/peliculas")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "EsAdmin")]
     public class PeliculasController : ControllerBase
     {
         private readonly IPeliculaService peliculaService;
+        private readonly IRatingService ratingService;
 
-        public PeliculasController(IPeliculaService peliculaService)
+        public PeliculasController(IPeliculaService peliculaService, IRatingService ratingService)
         {
             this.peliculaService = peliculaService;
+            this.ratingService = ratingService;
         }
 
         [HttpGet]
@@ -57,6 +62,7 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet("landingPage")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetLandingPage()
         {
             var result = await peliculaService.GetLandingPageInfo();
@@ -67,6 +73,7 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet("filtro")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<PeliculaDto>>> GetFilteredMovies([FromQuery] PeliculaFiltroDto filtroDto)
         {
             var result = await peliculaService.GetFiltered(filtroDto);
@@ -77,14 +84,25 @@ namespace PeliculasAPI.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<PeliculaDto>> GetById(int id)
         {
             var pelicula = await peliculaService.GetById(id);
 
             if (pelicula == null)
             {
-                return BadRequest();
+                return NotFound();
             }
+
+            var usuarioPuntuacion = 0;
+
+            if(HttpContext.User.Identity.IsAuthenticated)
+            {
+                var email = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "email").Value;
+                usuarioPuntuacion = await ratingService.GetUserRating(pelicula.Id, email);
+            }
+
+            pelicula.UsuarioPuntuacion = usuarioPuntuacion;
 
             return Ok(pelicula);
         }

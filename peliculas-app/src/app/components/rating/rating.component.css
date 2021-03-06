@@ -1,0 +1,8 @@
+.rating {
+  margin: 0 .5rem;
+}
+
+.rating button {
+  color: #f7c81f;
+  width: auto;
+}

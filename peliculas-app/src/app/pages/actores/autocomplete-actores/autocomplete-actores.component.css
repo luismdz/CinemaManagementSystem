@@ -2,9 +2,24 @@ form {
   width: 100%;
 }
 
+.table-container {
+  width: 100%;
+  overflow: auto;
+}
+
+table {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
 mat-form-field {
   width: 100%;
 }
+
+/* .input-personaje {
+  width: 100%;
+} */
 
 .thumbnail {
   width: 45px;
@@ -18,7 +33,26 @@ mat-option {
   margin-bottom: 5px;
 }
 
-table {
-  margin-top: 0;
-  margin-bottom: 1rem;
+@media screen and (max-width:575px) {
+  table {
+    max-width: 100%;
+  }
+
+  .thumbnail {
+    display: none;
+  }
+
+  table td.mat-column-nombre {
+    width: 80px;
+  }
+
+  table td.mat-column-personaje mat-form-field {
+    width: 120px;
+    margin-left: .5rem;
+  }
+
+  table td.mat-column-acciones {
+    margin: 0;
+    padding: 0;
+  }
 }

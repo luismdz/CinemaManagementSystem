@@ -1,4 +1,4 @@
-# PeliculasApp
+## CinemaManagementSystem
 
 Aplicacion completa de Peliculas utilizando:
 
